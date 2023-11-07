@@ -14,7 +14,6 @@ dependencies {
     implementation 'io.rest-assured:rest-assured:4.4.0'
     implementation 'com.google.code.gson:gson:2.8.9'
     implementation 'org.projectlombok:lombok:1.18.22'
-
     implementation group: 'com.codeborne', name: 'selenide', version: '6.19.1'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testImplementation 'org.assertj:assertj-core:3.14.0'
