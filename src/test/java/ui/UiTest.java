@@ -1,7 +1,9 @@
 package ui;
 
 import com.codeborne.selenide.*;
+import com.iteco.practic.ui.pages.BlogPage;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 
@@ -10,10 +12,17 @@ import static com.codeborne.selenide.Selenide.element;
 
 
 public class UiTest {
+
+    private BlogPage blogPage;
     @BeforeAll //настройка перед всеми тестами, сделать конфигурацию. обязательно метод должен быть статик
     public static void setup(){
         Configuration.browser = "chrome"; //selenide
         Configuration.baseUrl = "https://swiftbook.org/";
+    }
+    @BeforeEach// настройка перед всеми методами
+    public void createPage(){
+        blogPage = new BlogPage();
+
     }
     @Test
     public void webElementSelectorsTest(){
@@ -75,6 +84,20 @@ public class UiTest {
         //проверка что не смогли зарегистрироваться, что надпись на странице не изменилась
         SelenideElement title = element(byAttribute("class","unreg__content"));
         title.shouldHave(Condition.exactOwnTextCaseSensitive("Зарегистрируйтесь"));
+    }
+
+    @Test // public void defaultExistSidebarCard() аналог PageObject
+    public void defaultThemeIsLightPageObjectTest(){
+        blogPage.open()
+                .checkCurrentTheme("light");
+    }
+
+    @Test //public void themeSwitcherTest() аналог PageObject
+    public void themeSwitcherPageObjectTest(){
+        blogPage
+                .open()
+                .changeTheme()
+                .checkCurrentTheme("dark");
     }
 
 
