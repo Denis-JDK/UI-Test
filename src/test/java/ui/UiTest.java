@@ -48,9 +48,33 @@ public class UiTest {
     public void subscriptionFormTest(){
         Selenide.open("/shop");
         SelenideElement title = element(byAttribute("class","row"));
-        title.scrollIntoView(true); // скролим до этого элемента экран, чтоб при создание скринов теста reports/test скрины были на тестируемом элементе
+        title.scrollIntoView("{block:\"center\"}"); // скролим до этого элемента экран, чтоб при создание скринов теста reports/test скрины были на тестируемом элементе
 
         title.shouldHave(Condition.exactOwnTextCaseSensitive("Профессии")); //проверяем что именно такой текст есть в элементе и по камелкейсу
+    }
+
+    @Test
+    public void emailValidationTest(){
+        Selenide.open("/users/sign_up/");
+        String validEmail="inputEmail"; //важно чтоб валидация была на обьектке input
+        //здесь мы достаем input из контейнера div  и только потом проверяем вставку в него значения email
+        SelenideElement input = element(byAttribute("class","form-floating email optional user_email")).find("input");
+        input.setValue(validEmail);
+
+        input.pressEnter();
+
+        //проверяем появляющуюся надпись об ошибки по вводу email
+        SelenideElement toolType = element(byAttribute("class", "invalid-feedback"));
+        toolType.shouldBe(Condition.appear); //проверяем еще что сообщение видимо на странице
+        toolType.shouldHave(Condition.exactOwnTextCaseSensitive("Email имеет неверное значение"));
+
+        //проверяем что не зарегистрировались с ошибкой в email, путем проверки надписи на странице
+        SelenideElement buttonElement=element(byAttribute("data-disable-with","Продолжить"));
+        buttonElement.click(); //нажимаем на кнопку с формы с email
+
+        //проверка что не смогли зарегистрироваться, что надпись на странице не изменилась
+        SelenideElement title = element(byAttribute("class","unreg__content"));
+        title.shouldHave(Condition.exactOwnTextCaseSensitive("Зарегистрируйтесь"));
     }
 
 
