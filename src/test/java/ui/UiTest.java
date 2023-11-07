@@ -1,6 +1,7 @@
 package ui;
 
 import com.codeborne.selenide.*;
+import com.iteco.practic.ui.models.Theme;
 import com.iteco.practic.ui.pages.BlogPage;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -89,7 +90,7 @@ public class UiTest {
     @Test // public void defaultExistSidebarCard() аналог PageObject
     public void defaultThemeIsLightPageObjectTest(){
         blogPage.open()
-                .checkCurrentTheme("light");
+                .checkCurrentTheme(Theme.LIGHT);
     }
 
     @Test //public void themeSwitcherTest() аналог PageObject
@@ -97,7 +98,7 @@ public class UiTest {
         blogPage
                 .open()
                 .changeTheme()
-                .checkCurrentTheme("dark");
+                .checkCurrentTheme(Theme.DARK);
     }
 
 
