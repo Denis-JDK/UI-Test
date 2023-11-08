@@ -1,6 +1,7 @@
 package ui;
 
 import com.codeborne.selenide.*;
+import com.iteco.practic.ui.elements.SubscriptionForm;
 import com.iteco.practic.ui.models.Theme;
 import com.iteco.practic.ui.pages.BlogPage;
 import org.junit.jupiter.api.BeforeAll;
@@ -106,8 +107,31 @@ public class UiTest {
         Selenide.open("https://git-scm.com/about");
 
         blogPage
-                .getSubscriptionFormTitle()
-                .shouldBe(Condition.exactOwnTextCaseSensitive("Branching and Merging")); //проверяем что именно такой текст)
+                .getSubscriptionForm() //получили под элемент (subscriptionForm, вынесли для возможности переиспользовать), форму с текстом, у него уже берем
+                .getTitleGit()// берем элемент и сравниваем текст
+                .shouldBe(Condition.exactOwnTextCaseSensitive("Branching and Merging")); //проверяем что именно такой текст, в элементе
+    }
+
+
+    @Test
+    public void emailValidationPageObjectTest(){
+        Selenide.open("https://www.jetbrains.com/ru-ru/idea/");
+        String validEmail="inputEmail";
+
+        blogPage
+                .getSubscriptionForm()
+                .insertEmail(validEmail)
+                .getTooltip()
+                .shouldBe(Condition.appear) //проверяем еще что сообщение видимо на странице
+                .shouldHave(Condition.exactOwnTextCaseSensitive("Please enter a valid email address."));
+
+
+//        blogPage
+//                .getSubscriptionForm()
+//                .clickSubscript()
+//                .getTitle() //проверка что не смогли зарегистрироваться, что надпись на странице не изменилась
+//                .shouldBe(Condition.exactOwnTextCaseSensitive("Tell me about new product features as they come out"));
+
     }
 
 
