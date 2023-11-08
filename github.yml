@@ -1,0 +1,19 @@
+stages:
+  -build
+  -unit_tests
+  -system_test
+  -metrics
+
+
+build:
+  stage: build
+  image: openjdk:11
+  script:
+    - ./gradlew build -x test
+    - ./gradlew check -x test
+
+unit_tests:
+  stage: unit_tests
+  image: openjdk:11
+  script:
+    - ./gradlew test --tests CalculatorTest
