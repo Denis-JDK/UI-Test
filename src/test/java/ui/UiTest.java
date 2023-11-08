@@ -61,6 +61,7 @@ public class UiTest {
         title.scrollIntoView("{block:\"center\"}"); // скролим до этого элемента экран, чтоб при создание скринов теста reports/test скрины были на тестируемом элементе
 
         title.shouldHave(Condition.exactOwnTextCaseSensitive("Профессии")); //проверяем что именно такой текст есть в элементе и по камелкейсу
+
     }
 
     @Test
@@ -100,6 +101,16 @@ public class UiTest {
                 .changeTheme()
                 .checkCurrentTheme(Theme.DARK);
     }
+    @Test //public void subscriptionFormTest(){
+    public void subscriptionFormPageObjectTest(){
+        Selenide.open("https://git-scm.com/about");
+
+        blogPage
+                .getSubscriptionFormTitle()
+                .shouldBe(Condition.exactOwnTextCaseSensitive("Branching and Merging")); //проверяем что именно такой текст)
+    }
+
+
 
 
 }

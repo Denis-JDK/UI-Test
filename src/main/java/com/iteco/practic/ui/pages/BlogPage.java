@@ -18,6 +18,10 @@ public class BlogPage {
         return element(byAttribute("data-theme",theme.getAttributeValue())); //берем элемент по теме оформления на странице
     }
 
+    public SelenideElement getSubscriptionFormTitle(){
+        return element(byAttribute("data-section-id","branching-and-merging")); //берем элемент
+    }
+
     public void checkCurrentTheme(Theme theme) { // assertion проверка поэтому возвращаем не BlogPage
         getTheme(theme).shouldBe(Condition.exist); //проверяем существует ли элемент с заданной темой оформления сайта, проверка на переключение темы сайта
     }
